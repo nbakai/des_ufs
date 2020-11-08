@@ -1,18 +1,27 @@
 class UfsController < ApplicationController
-  before_action :set_uf, only: [:show, :update, :destroy]
+  before_action :set_uf, only: [ :update, :destroy]
 
+  @@contador = 0
   # GET /ufs
   def index
     @ufs = Uf.all
-
     render json: @ufs
   end
-
+  
   # GET /ufs/1
   def show
-    render json: @uf
+   
+    @uf = Uf.find_by(fecha: params[:fecha])
+    if @uf.nil?
+          render json: {message: 'No se encuentra el valor UF para esta fecha. Escriba formato yyyy-mm-dd'}
+    else  
+      Uf.increment_counter(:visitas, @uf.id)
+      @@contador += 1
+      render json: {uf: @uf, contador_de_visitas: @@contador }
+    end  
+    
   end
-
+  
   # POST /ufs
   def create
     @uf = Uf.new(uf_params)
@@ -46,6 +55,7 @@ class UfsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def uf_params
-      params.require(:uf).permit(:valor, :fecha)
+      params.require(:uf).permit(:valor, :fecha, :visitas)
     end
+
 end

@@ -1,5 +1,6 @@
 class ArrendatariosController < ApplicationController
   before_action :set_arrendatario, only: [:show, :update, :destroy]
+  before_action :set_headers
 
   # GET /arrendatarios
   def index
@@ -8,9 +9,13 @@ class ArrendatariosController < ApplicationController
     render json: @arrendatarios
   end
 
+  def new
+    @arrendatario = Arrendatario.new
+  end
+  
   # GET /arrendatarios/1
   def show
-    render json: @arrendatario
+    render json: @@contador
   end
 
   # POST /arrendatarios
@@ -48,4 +53,9 @@ class ArrendatariosController < ApplicationController
     def arrendatario_params
       params.require(:arrendatario).permit(:name, :valor_arriendo, :valor_total, :fecha_id)
     end
+    protected
+    def set_headers
+      response.set_header('cliente', nombre: @nombre)
+    end
+    
 end
