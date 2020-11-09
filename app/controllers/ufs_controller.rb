@@ -18,6 +18,9 @@ class UfsController < ApplicationController
       @valor = 0
       @valor = @uf[:valor]
       @visitas = @uf[:visitas]
+      if @visitas == 0 
+        @visitas += 1
+      end
       @@contador += 1
       render json: {Valor_uf: @valor, visitas_a_esta_fecha: @visitas, contador_de_visitas_totales: @@contador }
       
