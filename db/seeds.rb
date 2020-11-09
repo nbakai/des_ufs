@@ -6,6 +6,15 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 Uf.delete_all
+Arrendatario.delete_all 
+
+Arrendatario.create(
+    [
+        {
+            name: 'juan'
+        }
+    ]
+)
 
 Uf.create(
     [

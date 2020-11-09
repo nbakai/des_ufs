@@ -55,7 +55,8 @@ class ArrendatariosController < ApplicationController
     end
     protected
     def set_headers
-      response.set_header('cliente', nombre: @nombre)
+      @nombre = Arrendatario.find_by(params[:nombre])
+      response.set_header('client', nombre: @nombre)
     end
     
 end
